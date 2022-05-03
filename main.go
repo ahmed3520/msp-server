@@ -1,15 +1,7 @@
 package main
 
-import (
-	"fmt"
-	"log"
-	"net/http"
-
-	"github.com/ataha3520/msp-server/router"
-)
+import "github.com/ahmed3520/msp-server/app"
 
 func main() {
-	r := router.Router()
-	fmt.Println("Starting server on the port 8080...")
-	log.Fatal(http.ListenAndServe(":8080", r))
+	app.StartApp()
 }
