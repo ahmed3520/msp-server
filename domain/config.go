@@ -3,8 +3,11 @@ package domain
 import (
 	"context"
 	"fmt"
+	"log"
+	"os"
 	"time"
 
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -14,7 +17,14 @@ var (
 )
 
 func ConnDB() {
-	uri := "mongodb+srv://ataha3520:352000361999Aa@msp.leqx5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+	err := godotenv.Load(".env")
+
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+
+	fmt.Println("connection uri=>", os.Getenv("CONNECTION_URI"))
+	uri := os.Getenv("CONNECTION_URI")
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	if err != nil {
 		panic(err)
