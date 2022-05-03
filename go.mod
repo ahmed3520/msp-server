@@ -1,4 +1,4 @@
-module github.com/ataha3520/msp
+module github.com/ataha3520/msp-server
 
 go 1.18
 
