@@ -2,6 +2,7 @@ package domain
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/ahmed3520/msp-server/utils"
@@ -55,7 +56,18 @@ func Find(email string) (*User, *utils.RestErr) {
 	}
 	return &user, nil
 }
-
+func FindEvent(id primitive.ObjectID) (*Event, *utils.RestErr) {
+	fmt.Println("id event", id)
+	var event Event
+	eventsC := db.Collection("events")
+	ctx, _ := context.WithTimeout(context.Background(), time.Second*10)
+	err := eventsC.FindOne(ctx, bson.M{"_id": id}).Decode(&event)
+	if err != nil {
+		restErr := utils.NotFound("Event not found..")
+		return nil, restErr
+	}
+	return &event, nil
+}
 func Delete(email string) *utils.RestErr {
 	usersC := db.Collection("users")
 	ctx, _ := context.WithTimeout(context.Background(), time.Second*10)
@@ -69,6 +81,21 @@ func Delete(email string) *utils.RestErr {
 		return restErr
 	}
 	return nil
+}
+func DeleteEvent(id primitive.ObjectID) *utils.RestErr {
+	eventsC := db.Collection("events")
+	ctx, _ := context.WithTimeout(context.Background(), time.Second*10)
+	result, err := eventsC.DeleteOne(ctx, bson.M{"_id": id})
+	if err != nil {
+		restErr := utils.NotFound("Failed to delete..")
+		return restErr
+	}
+	if result.DeletedCount == 0 {
+		restErr := utils.NotFound("Event not found..")
+		return restErr
+	}
+	return nil
+
 }
 
 func Update(email string, field string, value string) (*User, *utils.RestErr) {

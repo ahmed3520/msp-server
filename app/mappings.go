@@ -13,4 +13,7 @@ func MapUrls() {
 	router.GET("/users/update", users.UpdateUser)
 	router.POST("/users/create", users.CreateUser)
 	router.POST("/events/create", events.CreateEvent)
+	router.GET("/events/find", events.FindEvent)
+	router.GET("/evenets/delete", events.DeleteEvent)
+
 }
