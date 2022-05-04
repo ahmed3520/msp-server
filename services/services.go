@@ -12,6 +12,13 @@ func CreateUser(user *domain.User) (*domain.User, *utils.RestErr) {
 	}
 	return user, nil
 }
+func CreateEvent(event *domain.Event) (*domain.Event, *utils.RestErr) {
+	event, restErr := domain.CreateEvent(event)
+	if restErr != nil {
+		return nil, restErr
+	}
+	return event, nil
+}
 
 func FindUser(email string) (*domain.User, *utils.RestErr) {
 	user, restErr := domain.Find(email)

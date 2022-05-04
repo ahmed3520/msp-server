@@ -26,6 +26,23 @@ func Create(user *User) (*User, *utils.RestErr) {
 	user.Password = ""
 	return user, nil
 }
+func CreateEvent(event *Event) (*Event, *utils.RestErr) {
+	eventsC := db.Collection("events")
+	ctx, _ := context.WithTimeout(context.Background(), time.Second*20)
+	result, err := eventsC.InsertOne(ctx, bson.M{
+		"name":          event.Name,
+		"image":         event.Image,
+		"thumbnail":     event.Thumbnail,
+		"speakersevent": event.SpeakersEvent,
+	})
+	if err != nil {
+		restErr := utils.InternalErr("can't insert event to the database..")
+		return nil, restErr
+	}
+	event.ID = result.InsertedID.(primitive.ObjectID)
+	return event, nil
+
+}
 
 func Find(email string) (*User, *utils.RestErr) {
 	var user User
