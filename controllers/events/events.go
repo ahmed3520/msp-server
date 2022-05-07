@@ -48,6 +48,14 @@ func FindEvent(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, event)
 }
+func GetAllEvents(c *gin.Context) {
+	events, restErr := services.GetAllEvents()
+	if restErr != nil {
+		c.JSON(restErr.Status, restErr)
+		return
+	}
+	c.JSON(http.StatusOK, events)
+}
 
 func DeleteEvent(c *gin.Context) {
 	eventId := c.Query("id")

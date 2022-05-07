@@ -20,6 +20,13 @@ func CreateEvent(event *domain.Event) (*domain.Event, *utils.RestErr) {
 	}
 	return event, nil
 }
+func CreateCommite(committe *domain.Committe) (*domain.Committe, *utils.RestErr) {
+	committe, restErr := domain.CreateCommite(committe)
+	if restErr != nil {
+		return nil, restErr
+	}
+	return committe, nil
+}
 
 func FindUser(email string) (*domain.User, *utils.RestErr) {
 	user, restErr := domain.Find(email)
@@ -35,6 +42,27 @@ func FindEvent(id primitive.ObjectID) (*domain.Event, *utils.RestErr) {
 		return nil, restErr
 	}
 	return event, nil
+}
+func FindCommitte(name string) (*domain.Committe, *utils.RestErr) {
+	committe, restErr := domain.FindCommitte(name)
+	if restErr != nil {
+		return nil, restErr
+	}
+	return committe, nil
+}
+func GetAllEvents() ([]primitive.M, *utils.RestErr) {
+	events, restErr := domain.GetAllEvents()
+	if restErr != nil {
+		return nil, restErr
+	}
+	return events, nil
+}
+func GetAllCommitte() ([]primitive.M, *utils.RestErr) {
+	committe, restErr := domain.GetAllCommitte()
+	if restErr != nil {
+		return nil, restErr
+	}
+	return committe, nil
 }
 func DeleteUser(email string) *utils.RestErr {
 	restErr := domain.Delete(email)
@@ -57,4 +85,12 @@ func UpdateUser(email string, field string, value string) (*domain.User, *utils.
 	}
 	user.Password = ""
 	return user, nil
+}
+
+func UpdateCommitte(name string, field string, value string) (*domain.Committe, *utils.RestErr) {
+	committe, restErr := domain.UpdateCommitte(name, field, value)
+	if restErr != nil {
+		return nil, restErr
+	}
+	return committe, nil
 }
