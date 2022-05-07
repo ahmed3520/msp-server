@@ -33,6 +33,9 @@ func CreateEvent(event *Event) (*Event, *utils.RestErr) {
 	result, err := eventsC.InsertOne(ctx, bson.M{
 		"name":          event.Name,
 		"image":         event.Image,
+		"date":          event.Date,
+		"location":      event.Location,
+		"description":   event.Description,
 		"thumbnail":     event.Thumbnail,
 		"speakersevent": event.SpeakersEvent,
 	})
