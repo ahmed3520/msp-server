@@ -49,6 +49,9 @@ func FindEvent(c *gin.Context) {
 	c.JSON(http.StatusOK, event)
 }
 func GetAllEvents(c *gin.Context) {
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	c.Writer.Header().Set("Access-Control-Allow-Methods", "GET")
+	fmt.Println("LOOOL")
 	events, restErr := services.GetAllEvents()
 	if restErr != nil {
 		c.JSON(restErr.Status, restErr)

@@ -44,6 +44,9 @@ func FindCommitte(c *gin.Context) {
 	c.JSON(http.StatusOK, event)
 }
 func GetAllCommitte(c *gin.Context) {
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	c.Writer.Header().Set("Access-Control-Allow-Methods", "GET")
+	c.Writer.Header().Add("X-Frame-Options", "DENY")
 	committe, restErr := services.GetAllCommitte()
 	if restErr != nil {
 		c.JSON(restErr.Status, restErr)
